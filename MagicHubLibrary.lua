@@ -372,6 +372,7 @@ end
 Library.createlibrary = function()
 	if loaded == false then
 		loaded = true
+		task.wait(5)
 		settingsgui()
 		--//CloseGui
 		UI.Sector.Visible = false
