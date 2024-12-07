@@ -347,9 +347,6 @@ local Tweens = {
 
 local function closegui()
 	showclose = true
-	UI.MainSectors.Visible = false
-	UI.Sector.Visible = false
-	UI.Title.Visible = false
 	Tweens.CloseGui:Play()
 	Tweens.CloseGui.Completed:Wait()
 	UI.Gui.Enabled = false
@@ -362,9 +359,6 @@ local function opengui()
 	UI.Gui.Enabled = true
 	Tweens.OpenGui:Play()
 	Tweens.OpenGui.Completed:Wait()
-	UI.Sector.Visible = true
-	UI.MainSectors.Visible = true
-	UI.Title.Visible = true
 	task.wait(0.25)
 	showclose = false
 end
@@ -372,13 +366,10 @@ end
 Library.createlibrary = function()
 	if loaded == false then
 		loaded = true
-		task.wait(5)
+		task.wait(2.5)
 		settingsgui()
 		--//CloseGui
-		UI.Sector.Visible = false
-		UI.MainSectors.Visible = false
-		UI.Title.Visible = false
-		UI.Gui.Enabled = false
+		UI.MainFrame.Size = UDim2.new(0.363, 0,0, 0)
 		--//OpenGui
 		opengui()
 		--//OpenClose
@@ -460,6 +451,7 @@ Library.createslider = function(SectorName,Name,CallBack,Min,Max)
 	local pos = math.clamp(1, Min, 1)
 	SliderButton.Position = UDim2.new(pos-0.05, 0, SliderButton.Position.Y, 0)
 	SliderFill.Size = UDim2.fromScale(pos, 1)
+	local procents = tostring((math.ceil(pos*Max)))
 	SliderTextLabel.Text = Name.." "..(math.ceil(pos*Max)).."%"
 
 	uis.InputEnded:Connect(function(input)
@@ -477,11 +469,13 @@ Library.createslider = function(SectorName,Name,CallBack,Min,Max)
 			local pos = math.clamp((mouse.X - Slider.AbsolutePosition.X) / Slider.AbsoluteSize.X, Min, 1)
 			SliderButton.Position = UDim2.new(pos-0.05, 0, SliderButton.Position.Y, 0)
 			SliderFill.Size = UDim2.fromScale(pos, 1)
-			local procents = tostring((math.ceil(pos*Max)))
+			local procents1 = tostring((math.ceil(pos*Max)))
 			SliderTextLabel.Text = Name.." "..(math.ceil(pos*Max)).."%"
-			CallBack(procents)
+			CallBack(procents1)
 		end
 	end)
+	
+	CallBack(procents)
 end
 
 Library.createdropdown = function(SectorName,Name,CallBack,Options)
