@@ -8,7 +8,7 @@ local ts = game:GetService("TweenService")
 local showclose = false
 local loaded = false
 local TextFontName = Enum.Font.Nunito
-local TitleName = "MagicHub"
+local TitleName = "Best | Hub"
 
 local UI = {
 	--//Gui//--
@@ -213,7 +213,7 @@ local function castomizegui()
 	UI.SliderTextLabelStroke.LineJoinMode = Enum.LineJoinMode.Round
 	UI.SliderTextLabelStroke.Thickness = 1
 	UI.SliderButton.Name = "SliderButton"
-	UI.SliderButton.BackgroundTransparency = 0
+	UI.SliderButton.BackgroundTransparency = 0.5
 	UI.SliderButton.BackgroundColor3 = Color3.fromRGB(170,170,170)
 	UI.SliderButton.Size = UDim2.new(0.07, 0,1, 0)
 	UI.SliderButton.Position = UDim2.new(0.95, 0,0.04, 0)
@@ -492,18 +492,22 @@ Library.createdropdown = function(SectorName,Name,CallBack,Options)
 	local openclose = false
 	
 	local function DropDownClose()
+		if openclose == false then
 		openclose = true
 		ts:Create(DropDown,TweenInfo.new(0.5,Enum.EasingStyle.Quad, Enum.EasingDirection.In),{Size = UDim2.new(0.927, 0,0.12, 0)}):Play()
 		ts:Create(DropDownScrolling,TweenInfo.new(0.5,Enum.EasingStyle.Quad, Enum.EasingDirection.In),{Size = UDim2.new(1, 0,0, 0)}):Play()
-		task.delay(0.5,function() openclose = false DropDownScrolling.Visible = false end)
+		task.delay(0.5,function() openclose = false opened = false DropDownScrolling.Visible = false end)
+		end
 	end
 	
 	local function DropDownOpen()
+		if openclose == false then
 		openclose = true
 		DropDownScrolling.Visible = true
 		ts:Create(DropDown,TweenInfo.new(0.5,Enum.EasingStyle.Quad, Enum.EasingDirection.In),{Size = UDim2.new(0.927, 0,0.682, 0)}):Play()
 		ts:Create(DropDownScrolling,TweenInfo.new(0.5,Enum.EasingStyle.Quad, Enum.EasingDirection.In),{Size = UDim2.new(1, 0,5, 0)}):Play()
-		task.delay(0.5,function() openclose = false end)
+		task.delay(0.5,function() openclose = false opened = true end)
+		end
 	end
 	
 	for number,option in Options do
@@ -512,24 +516,19 @@ Library.createdropdown = function(SectorName,Name,CallBack,Options)
 		NewOption.Parent = DropDownScrolling
 		NewOption.Text = Options[number]
 		NewOption.MouseButton1Click:Connect(function()
-			CallBack(NewOption.Name)
-			DropDownButton.Text = "Choose "..Name..":"..NewOption.Name
 			if openclose == false then
+				CallBack(NewOption.Name)
+				DropDownButton.Text = "Choose "..Name..":"..NewOption.Name
 				DropDownClose()
-				opened = false
 			end
 		end)
 	end 
 	
 	DropDownButton.MouseButton1Click:Connect(function()
-		if openclose == false then
-			if opened == false then
-				DropDownOpen()
-				opened = true
-			else
-				DropDownClose()
-				opened = false
-			end
+		if opened == false then
+			DropDownOpen()
+		else
+			DropDownClose()
 		end
 	end)
 	
