@@ -1,4 +1,4 @@
-local Library = {}
+ local Library = {}
 
 local uis = game:GetService("UserInputService")
 local plr = game:GetService("Players").LocalPlayer
@@ -44,6 +44,11 @@ local UI = {
 	ButtonBorder = Instance.new("UIStroke"),
 	ButtonStroke = Instance.new("UIStroke"),
 	ButtonCorner = Instance.new("UICorner"),
+	--//Bind//--
+	Bind = Instance.new("TextButton"),
+	BindBorder = Instance.new("UIStroke"),
+	BindStroke = Instance.new("UIStroke"),
+	BindCorner = Instance.new("UICorner"),
 	--//Trigger//--
 	Trigger = Instance.new("TextButton"),
 	TriggerBorder = Instance.new("UIStroke"),
@@ -55,6 +60,7 @@ local UI = {
 	SliderTextLabel = Instance.new("TextLabel"),
 	SliderTextLabelStroke = Instance.new("UIStroke"),
 	SliderButton = Instance.new("TextButton"),
+	SliderButtonBorder = Instance.new("UIStroke"),
 	SliderButtonCorner = Instance.new("UICorner"),
 	SliderFill = Instance.new("Frame"),
 	SliderFillCorner = Instance.new("UICorner"),
@@ -62,6 +68,7 @@ local UI = {
 	--//DropDown//--
 	DropDown = Instance.new("Frame"),
 	DropDownBorder = Instance.new("UIStroke"),
+	DropDownText = Instance.new("UIStroke"),
 	DropDownCorner = Instance.new("UICorner"),
 	DropDownButton = Instance.new("TextButton"),
 	DropDownButtonUiAspect = Instance.new("UIAspectRatioConstraint"),
@@ -77,25 +84,26 @@ local UI = {
 
 local function castomizegui()
 	--//Gui//--
-	UI.Gui.Parent = plr.PlayerGui
 	UI.Gui.Name = math.random(1,10000)..math.random(1,10000)..math.random(1,10000)
 	UI.Gui.IgnoreGuiInset = true
 	UI.Gui.ResetOnSpawn = false
 	UI.Gui.DisplayOrder = 1000
+	UI.Gui.Parent = plr.PlayerGui
 	--//MainFrame//--
 	UI.MainFrame.Name = "MainFrame"
 	UI.MainFrame.Size = UDim2.new(0.363, 0,0.321, 0)
 	UI.MainFrame.Position = UDim2.new(0.391, 0,0.338, 0)
+	UI.MainFrame.BackgroundColor3 = Color3.fromRGB(255,255,255)
 	UI.MainFrame.Active = true
 	UI.MainFrame.Draggable = true
 	UI.MainFrameUiAspect.AspectRatio = 1.8
-	UI.MainFrameGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(48,48,48)),ColorSequenceKeypoint.new(1, Color3.fromRGB(21,21,21))})
+	UI.MainFrameGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(48,48,48)),ColorSequenceKeypoint.new(1, Color3.fromRGB(28,28,28))})
 	UI.MainFrameGradient.Rotation = -90
 	UI.MainFrameCorner.CornerRadius = UDim.new(0,8)
 	UI.MainFrameStroke.Color = Color3.fromRGB(85,85,85)
 	UI.MainFrameStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	UI.MainFrameStroke.LineJoinMode = Enum.LineJoinMode.Round
-	UI.MainFrameStroke.Thickness = 1
+	UI.MainFrameStroke.Thickness = 2
 	--//Title//--
 	UI.Title.Name = "Title"
 	UI.Title.Size = UDim2.new(0.803, 0,0.128, 0)
@@ -127,7 +135,7 @@ local function castomizegui()
 	UI.Outline2.Size = UDim2.new(0, 0,1, 0)
 	UI.Outline2.Position = UDim2.new(0.195, 0,0, 0)
 	UI.Outline2.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	UI.OutlinesStroke.Color = Color3.fromRGB(57,57,57)
+	UI.OutlinesStroke.Color = Color3.fromRGB(85,85,85)
 	UI.OutlinesStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	UI.OutlinesStroke.LineJoinMode = Enum.LineJoinMode.Round
 	UI.OutlinesStroke.Thickness = 1
@@ -139,22 +147,34 @@ local function castomizegui()
 	UI.Sector.ScrollBarThickness = 0
 	UI.Sector.AutomaticCanvasSize = Enum.AutomaticSize.XY
 	UI.Sector.CanvasSize = UDim2.new(0,0,0,0)
-	UI.Sector.Size = UDim2.new(0.193, 0,0.871, 0)
-	UI.Sector.Position = UDim2.new(0, 0,0.128, 0)
+	UI.Sector.Size = UDim2.new(0.193, 0,0.85, 0)
+	UI.Sector.Position = UDim2.new(0, 0,0.15, 0)
 	UI.Sector.BackgroundTransparency = 1
+	UI.Sector.ClipsDescendants = true
 	UI.SectorList.HorizontalAlignment = Enum.HorizontalAlignment.Center
-	UI.SectorList.Padding = UDim.new(0,5)
+	UI.SectorList.Padding = UDim.new(0,8)
 	UI.SectorButton.Size = UDim2.new(0.789, 0,0.121, 0)
 	UI.SectorButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 	UI.SectorButton.BackgroundTransparency = 0.65
 	UI.SectorButton.Font = TextFontName
 	UI.SectorButton.TextColor3 = Color3.fromRGB(255,255,255)
 	UI.SectorButton.TextScaled = true
+	UI.SectorButtonCorner.CornerRadius = UDim.new(0,8)
+	UI.SectorButtonBorder.Color = Color3.fromRGB(80,80,80)
+	UI.SectorButtonBorder.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	UI.SectorButtonBorder.LineJoinMode = Enum.LineJoinMode.Round
+	UI.SectorButtonBorder.Thickness = 1
+	UI.SectorButtonStroke.Color = Color3.fromRGB(0,0,0)
+	UI.SectorButtonStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
+	UI.SectorButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
+	UI.SectorButtonStroke.Thickness = 1
 	--//MainSectors//--
 	UI.MainSectors.Name = "MainSectors"
 	UI.MainSectors.Size = UDim2.new(0.803, 0,0.83, 0)
 	UI.MainSectors.Position = UDim2.new(0.197, 0,0.17, 0)
 	UI.MainSectors.BackgroundTransparency = 1
+	UI.MainSectors.ClipsDescendants = true
+	UI.SectorsFrame.ClipsDescendants = true
 	UI.SectorsFrame.Size = UDim2.new(1,0,1,0)
 	UI.SectorsFrame.MidImage = ""
 	UI.SectorsFrame.TopImage = ""
@@ -176,11 +196,27 @@ local function castomizegui()
 	UI.ButtonBorder.Color = Color3.fromRGB(80,80,80)
 	UI.ButtonBorder.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	UI.ButtonBorder.LineJoinMode = Enum.LineJoinMode.Round
-	UI.ButtonBorder.Thickness = 1
+	UI.ButtonBorder.Thickness = 1.7
 	UI.ButtonStroke.Color = Color3.fromRGB(0,0,0)
 	UI.ButtonStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
 	UI.ButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
 	UI.ButtonStroke.Thickness = 1
+	--//Bind//--
+	UI.Bind.Size = UDim2.new(0.927, 0,0.114, 0)
+	UI.Bind.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+	UI.Bind.BackgroundTransparency = 0.65
+	UI.Bind.Font = TextFontName
+	UI.Bind.TextColor3 = Color3.fromRGB(255,255,255)
+	UI.Bind.TextScaled = true
+	UI.BindCorner.CornerRadius = UDim.new(0,8)
+	UI.BindBorder.Color = Color3.fromRGB(80,80,80)
+	UI.BindBorder.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	UI.BindBorder.LineJoinMode = Enum.LineJoinMode.Round
+	UI.BindBorder.Thickness = 1.7
+	UI.BindStroke.Color = Color3.fromRGB(0,0,0)
+	UI.BindStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
+	UI.BindStroke.LineJoinMode = Enum.LineJoinMode.Round
+	UI.BindStroke.Thickness = 1
 	--//Trigger//--
 	UI.Trigger.Size = UDim2.new(0.927, 0,0.114, 0)
 	UI.Trigger.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
@@ -192,7 +228,7 @@ local function castomizegui()
 	UI.TriggerBorder.Color = Color3.fromRGB(80,80,80)
 	UI.TriggerBorder.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	UI.TriggerBorder.LineJoinMode = Enum.LineJoinMode.Round
-	UI.TriggerBorder.Thickness = 1
+	UI.TriggerBorder.Thickness = 1.7
 	UI.TriggerStroke.Color = Color3.fromRGB(0,0,0)
 	UI.TriggerStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
 	UI.TriggerStroke.LineJoinMode = Enum.LineJoinMode.Round
@@ -201,7 +237,7 @@ local function castomizegui()
 	UI.Slider.Size = UDim2.new(0.927, 0,0.114, 0)
 	UI.Slider.BackgroundTransparency = 1
 	UI.SliderCorner.CornerRadius = UDim.new(0,8)
-	UI.SliderTextLabel.ZIndex = 3
+	UI.SliderTextLabel.ZIndex = 2
 	UI.SliderTextLabel.BackgroundTransparency = 1
 	UI.SliderTextLabel.Size = UDim2.new(0.563, 0,1, 0)
 	UI.SliderTextLabel.Position = UDim2.new(0.239, 0,0, 0)
@@ -213,11 +249,14 @@ local function castomizegui()
 	UI.SliderTextLabelStroke.LineJoinMode = Enum.LineJoinMode.Round
 	UI.SliderTextLabelStroke.Thickness = 1
 	UI.SliderButton.Name = "SliderButton"
-	UI.SliderButton.BackgroundTransparency = 0.5
-	UI.SliderButton.BackgroundColor3 = Color3.fromRGB(170,170,170)
+	UI.SliderButton.BackgroundTransparency = 0.15
+	UI.SliderButton.BackgroundColor3 = Color3.fromRGB(100,100,100)
 	UI.SliderButton.Size = UDim2.new(0.07, 0,1, 0)
 	UI.SliderButton.Position = UDim2.new(0.95, 0,0.04, 0)
 	UI.SliderButton.ZIndex = 3
+	UI.SliderButtonBorder.Color = Color3.fromRGB(150, 150, 150)
+	UI.SliderButtonBorder.Thickness = 1
+	UI.SliderButtonBorder.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	UI.SliderButtonCorner.CornerRadius = UDim.new(1,0)
 	UI.SliderFill.Name = "SliderFill"
 	UI.SliderFill.Size = UDim2.new(1, 0,1, 0)
@@ -227,7 +266,7 @@ local function castomizegui()
 	UI.SliderFillBorder.Color = Color3.fromRGB(80,80,80)
 	UI.SliderFillBorder.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	UI.SliderFillBorder.LineJoinMode = Enum.LineJoinMode.Round
-	UI.SliderFillBorder.Thickness = 1
+	UI.SliderFillBorder.Thickness = 1.7
 	UI.SliderFillCorner.CornerRadius = UDim.new(0,8)
 	--//DropDown//--
 	UI.DropDown.Size = UDim2.new(0.927, 0,0.114, 0)
@@ -236,6 +275,9 @@ local function castomizegui()
 	UI.DropDownButton.Size = UDim2.new()
 	UI.DropDown.BackgroundTransparency = 1
 	UI.DropDownBorder.Color = Color3.fromRGB(80,80,80)
+	UI.DropDownBorder.Thickness = 1.7
+	UI.DropDownText.Color = Color3.fromRGB(0,0,0)
+	UI.DropDownText.Thickness = 1
 	UI.DropDownButton.Size = UDim2.new(1, 0,1, 0)
 	UI.DropDownButton.Position = UDim2.new(0,0,0,0)
 	UI.DropDownButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
@@ -255,15 +297,21 @@ local function castomizegui()
 	UI.DropDownScroll.ScrollBarThickness = 0
 	UI.DropDownScroll.AutomaticCanvasSize = Enum.AutomaticSize.XY
 	UI.DropDownScroll.CanvasSize = UDim2.new(0,0,0,0)
+	UI.DropDownScroll.ClipsDescendants = true
 	UI.DropDownScrollList.HorizontalAlignment = Enum.HorizontalAlignment.Center
 	UI.DropDownScrollList.Padding = UDim.new(0,6)
-	UI.DropDownOption.Size = UDim2.new(1, 0,1, 0)
+	UI.DropDownOption.Size = UDim2.new(0.97, 0,1, 0)
 	UI.DropDownOption.Position = UDim2.new(0,7,0,0)
 	UI.DropDownOption.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 	UI.DropDownOption.BackgroundTransparency = 0.5
 	UI.DropDownOption.Font = TextFontName
 	UI.DropDownOption.TextColor3 = Color3.fromRGB(255,255,255)
 	UI.DropDownOption.TextScaled = true
+	UI.DropDownOptionCorner.CornerRadius = UDim.new(0,8)
+	UI.DropDownOptionBorder.Color = Color3.fromRGB(65,65,65)
+	UI.DropDownOptionBorder.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	UI.DropDownOptionBorder.LineJoinMode = Enum.LineJoinMode.Round
+	UI.DropDownOptionBorder.Thickness = 1.7
 	UI.DropDownOptionUiAspect.AspectRatio = 15
 	UI.DropDownOptionUiAspect.DominantAxis = Enum.DominantAxis.Height
 end
@@ -298,6 +346,10 @@ local function settingsgui()
 	UI.ButtonCorner.Parent = UI.Button
 	UI.ButtonBorder.Parent = UI.Button
 	UI.ButtonStroke.Parent = UI.Button
+	--//Bind//--
+	UI.BindCorner.Parent = UI.Bind
+	UI.BindBorder.Parent = UI.Bind
+	UI.BindStroke.Parent = UI.Bind
 	--//Trigger//--
 	UI.TriggerCorner.Parent = UI.Trigger
 	UI.TriggerBorder.Parent = UI.Trigger
@@ -307,12 +359,14 @@ local function settingsgui()
 	UI.SliderTextLabel.Parent = UI.Slider
 	UI.SliderTextLabelStroke.Parent = UI.SliderTextLabel
 	UI.SliderButton.Parent = UI.Slider
+	UI.SliderButtonBorder.Parent = UI.SliderButton
 	UI.SliderButtonCorner.Parent = UI.SliderButton
 	UI.SliderFill.Parent = UI.Slider
 	UI.SliderFillCorner.Parent = UI.SliderFill
 	UI.SliderFillBorder.Parent = UI.SliderFill
 	--//DropDown//--
 	UI.DropDownBorder.Parent = UI.DropDown
+	UI.DropDownText.Parent = UI.DropDownButton
 	UI.DropDownCorner.Parent = UI.DropDown
 	UI.DropDownButton.Parent = UI.DropDown
 	UI.DropDownButtonUiAspect.Parent = UI.DropDownButton
@@ -427,6 +481,7 @@ Library.createtrigger = function(SectorName,Name,CallBack)
 	Trigger.Parent = UI.MainSectors:FindFirstChild(SectorName)
 	Trigger.Name = Name.."Trigger"
 	Trigger.Text = Name..":"..tostring(onoff)
+	CallBack(onoff)
 	Trigger.MouseButton1Click:Connect(function()
 		onoff = not onoff
 		Trigger.Text = Name..":"..tostring(onoff)
@@ -449,7 +504,7 @@ Library.createslider = function(SectorName,Name,CallBack,Min,Max)
 	local slidermove = false
 
 	local pos = math.clamp(1, Min, 1)
-	SliderButton.Position = UDim2.new(pos-0.05, 0, SliderButton.Position.Y, 0)
+	SliderButton.Position = UDim2.new(pos-0.035, 0, SliderButton.Position.Y, 0)
 	SliderFill.Size = UDim2.fromScale(pos, 1)
 	local procents = tostring((math.ceil(pos*Max)))
 	SliderTextLabel.Text = Name.." "..(math.ceil(pos*Max)).."%"
@@ -467,7 +522,7 @@ Library.createslider = function(SectorName,Name,CallBack,Min,Max)
 	uis.InputChanged:Connect(function(input)
 		if slidermove and input.UserInputType == Enum.UserInputType.MouseMovement then
 			local pos = math.clamp((mouse.X - Slider.AbsolutePosition.X) / Slider.AbsoluteSize.X, Min, 1)
-			SliderButton.Position = UDim2.new(pos-0.05, 0, SliderButton.Position.Y, 0)
+			SliderButton.Position = UDim2.new(pos-0.035, 0, SliderButton.Position.Y, 0)
 			SliderFill.Size = UDim2.fromScale(pos, 1)
 			local procents1 = tostring((math.ceil(pos*Max)))
 			SliderTextLabel.Text = Name.." "..(math.ceil(pos*Max)).."%"
@@ -484,7 +539,7 @@ Library.createdropdown = function(SectorName,Name,CallBack,Options)
 	DropDown.Name = Name.."DropDown"
 	local DropDownButton = DropDown.DropDownButton
 	DropDownButton.Name = Name.."DropDownButton"
-	DropDownButton.Text = "Choose "..Name..":"
+	DropDownButton.Text = Name..":"
 	local DropDownScrolling = DropDownButton.DropDownScroll
 	DropDownScrolling.Visible = false
 	--//DropDownScript//--
@@ -504,8 +559,8 @@ Library.createdropdown = function(SectorName,Name,CallBack,Options)
 		if openclose == false then
 		openclose = true
 		DropDownScrolling.Visible = true
-		ts:Create(DropDown,TweenInfo.new(0.5,Enum.EasingStyle.Quad, Enum.EasingDirection.In),{Size = UDim2.new(0.927, 0,0.682, 0)}):Play()
-		ts:Create(DropDownScrolling,TweenInfo.new(0.5,Enum.EasingStyle.Quad, Enum.EasingDirection.In),{Size = UDim2.new(1, 0,5, 0)}):Play()
+		ts:Create(DropDown,TweenInfo.new(0.5,Enum.EasingStyle.Quad, Enum.EasingDirection.In),{Size = UDim2.new(0.927, 0,0.55, 0)}):Play()
+		ts:Create(DropDownScrolling,TweenInfo.new(0.5,Enum.EasingStyle.Quad, Enum.EasingDirection.In),{Size = UDim2.new(1, 0,3.7, 0)}):Play()
 		task.delay(0.5,function() openclose = false opened = true end)
 		end
 	end
@@ -515,10 +570,17 @@ Library.createdropdown = function(SectorName,Name,CallBack,Options)
 		NewOption.Name = Options[number]
 		NewOption.Parent = DropDownScrolling
 		NewOption.Text = Options[number]
+		NewOption.BackgroundColor3 = Color3.fromRGB(45,45,45)
+		
+		if number == 1 then
+			CallBack(NewOption.Name)
+			DropDownButton.Text = Name..":"..NewOption.Name
+		end
+		
 		NewOption.MouseButton1Click:Connect(function()
 			if openclose == false then
 				CallBack(NewOption.Name)
-				DropDownButton.Text = "Choose "..Name..":"..NewOption.Name
+				DropDownButton.Text = Name..":"..NewOption.Name
 				DropDownClose()
 			end
 		end)
@@ -532,6 +594,38 @@ Library.createdropdown = function(SectorName,Name,CallBack,Options)
 		end
 	end)
 	
+end
+
+Library.createbind = function(SectorName,Name,CallBack,DefaultBind)
+	local BindKey = DefaultBind
+	local BindClicked = true
+	local Bind = UI.Bind:Clone()
+	Bind.Parent = UI.MainSectors:FindFirstChild(SectorName)
+	Bind.Name = Name.."Button"
+	Bind.Text = Name..":Bind("..BindKey.Name..")"
+	Bind.MouseButton1Click:Connect(function()
+		BindClicked = false
+		Bind.Text = "Click Your Bind"
+	end)
+	uis.InputBegan:Connect(function(key,chatting)
+		if chatting then return end
+			
+		if key.KeyCode == BindKey or key.UserInputType == BindKey then
+			CallBack(BindKey.Name)
+		end
+			
+		if BindClicked == false then
+			if key.KeyCode.Name ~= "Unknown" then
+				BindClicked = true
+				BindKey = key.KeyCode
+				Bind.Text = Name..":Bind("..BindKey.Name..")"
+			elseif key.KeyCode.Name == "Unknown" then
+				BindClicked = true
+				BindKey = key.UserInputType
+				Bind.Text = Name..":Bind("..BindKey.Name..")"
+			end
+		end
+	end)
 end
 
 return Library
