@@ -1,4 +1,4 @@
- local Library = {}
+local Library = {}
 
 local uis = game:GetService("UserInputService")
 local plr = game:GetService("Players").LocalPlayer
@@ -13,6 +13,8 @@ local TitleName = "Best | Hub"
 local UI = {
 	--//Gui//--
 	Gui = Instance.new("ScreenGui"),
+	--//Sound//--
+	ClickSound = Instance.new("Sound"),
 	--//MainFrame//--
 	MainFrame = Instance.new("Frame"),
 	MainFrameUiAspect = Instance.new("UIAspectRatioConstraint"),
@@ -89,6 +91,10 @@ local function castomizegui()
 	UI.Gui.ResetOnSpawn = false
 	UI.Gui.DisplayOrder = 1000
 	UI.Gui.Parent = plr.PlayerGui
+	--//Sound//--
+	UI.ClickSound.Volume = 0.2
+	UI.ClickSound.SoundId = "rbxassetid://6895079853"
+	UI.ClickSound.Name = "ClickSound"
 	--//MainFrame//--
 	UI.MainFrame.Name = "MainFrame"
 	UI.MainFrame.Size = UDim2.new(0.363, 0,0.321, 0)
@@ -97,8 +103,8 @@ local function castomizegui()
 	UI.MainFrame.Active = true
 	UI.MainFrame.Draggable = true
 	UI.MainFrameUiAspect.AspectRatio = 1.8
-	UI.MainFrameGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(48,48,48)),ColorSequenceKeypoint.new(1, Color3.fromRGB(28,28,28))})
-	UI.MainFrameGradient.Rotation = -90
+	UI.MainFrameGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(30,30,30)),ColorSequenceKeypoint.new(1, Color3.fromRGB(50,50,50))})
+	UI.MainFrameGradient.Rotation = 90
 	UI.MainFrameCorner.CornerRadius = UDim.new(0,8)
 	UI.MainFrameStroke.Color = Color3.fromRGB(85,85,85)
 	UI.MainFrameStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
@@ -318,6 +324,8 @@ end
 
 local function settingsgui()
 	castomizegui()
+	--//Sound//--
+	UI.ClickSound.Parent = game:GetService("SoundService")
 	--//MainFrame//--
 	UI.MainFrameUiAspect.Parent = UI.MainFrame
 	UI.MainFrameCorner.Parent = UI.MainFrame
@@ -461,6 +469,7 @@ Library.createsector = function(SectorName)
 		end
 	end
 	SectorButton.MouseButton1Click:Connect(function()
+		UI.ClickSound:Play()
 		visiblesector(SectorsFrame.Name)
 	end)
 end
@@ -471,6 +480,7 @@ Library.createbutton = function(SectorName,Name,CallBack)
 	Button.Name = Name.."Button"
 	Button.Text = Name
 	Button.MouseButton1Click:Connect(function()
+		UI.ClickSound:Play()
 		CallBack("Trigered!")
 	end)
 end
@@ -485,6 +495,7 @@ Library.createtrigger = function(SectorName,Name,CallBack)
 	Trigger.MouseButton1Click:Connect(function()
 		onoff = not onoff
 		Trigger.Text = Name..":"..tostring(onoff)
+		UI.ClickSound:Play()
 		CallBack(onoff)
 	end)
 end
@@ -508,10 +519,12 @@ Library.createslider = function(SectorName,Name,CallBack,Min,Max)
 	SliderFill.Size = UDim2.fromScale(pos, 1)
 	local procents = tostring((math.ceil(pos*Max)))
 	SliderTextLabel.Text = Name.." "..(math.ceil(pos*Max)).."%"
-
+	
 	uis.InputEnded:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 and slidermove == true then
 			slidermove = false
+			UI.ClickSound:Play()
+			CallBack(procents)
 		end
 	end)
 
@@ -521,12 +534,11 @@ Library.createslider = function(SectorName,Name,CallBack,Min,Max)
 
 	uis.InputChanged:Connect(function(input)
 		if slidermove and input.UserInputType == Enum.UserInputType.MouseMovement then
-			local pos = math.clamp((mouse.X - Slider.AbsolutePosition.X) / Slider.AbsoluteSize.X, Min, 1)
+			pos = math.clamp((mouse.X - Slider.AbsolutePosition.X) / Slider.AbsoluteSize.X, Min, 1)
 			SliderButton.Position = UDim2.new(pos-0.035, 0, SliderButton.Position.Y, 0)
 			SliderFill.Size = UDim2.fromScale(pos, 1)
-			local procents1 = tostring((math.ceil(pos*Max)))
+			procents = tostring((math.ceil(pos*Max)))
 			SliderTextLabel.Text = Name.." "..(math.ceil(pos*Max)).."%"
-			CallBack(procents1)
 		end
 	end)
 	
@@ -579,6 +591,7 @@ Library.createdropdown = function(SectorName,Name,CallBack,Options)
 		
 		NewOption.MouseButton1Click:Connect(function()
 			if openclose == false then
+				UI.ClickSound:Play()
 				CallBack(NewOption.Name)
 				DropDownButton.Text = Name..":"..NewOption.Name
 				DropDownClose()
@@ -587,6 +600,7 @@ Library.createdropdown = function(SectorName,Name,CallBack,Options)
 	end 
 	
 	DropDownButton.MouseButton1Click:Connect(function()
+		UI.ClickSound:Play()
 		if opened == false then
 			DropDownOpen()
 		else
@@ -604,6 +618,7 @@ Library.createbind = function(SectorName,Name,CallBack,DefaultBind)
 	Bind.Name = Name.."Button"
 	Bind.Text = Name..":Bind("..BindKey.Name..")"
 	Bind.MouseButton1Click:Connect(function()
+		UI.ClickSound:Play()
 		BindClicked = false
 		Bind.Text = "Click Your Bind"
 	end)
