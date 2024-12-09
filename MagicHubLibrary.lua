@@ -433,10 +433,12 @@ local function closegui()
 	UI.OpenCloseSound:Play()
 	showclose = true
 	Tweens.CloseGui:Play()
-	Tweens.CloseGui.Completed:Wait()
+	task.delay(1,function()
 	UI.Gui.Enabled = false
-	task.wait(0.25)
+	end)
+	task.delay(1.25,function()
 	showclose = false
+	end)
 end
 
 local function opengui()
@@ -444,15 +446,14 @@ local function opengui()
 	showclose = true
 	UI.Gui.Enabled = true
 	Tweens.OpenGui:Play()
-	Tweens.OpenGui.Completed:Wait()
-	task.wait(0.25)
-	showclose = false
+	task.delay(1.25,function()
+		showclose = false
+	end)
 end
 
 Library.createlibrary = function()
 	if loaded == false then
 		loaded = true
-		task.wait(2.5)
 		settingsgui()
 		--//CloseGui
 		UI.MainFrame.Size = UDim2.new(0.363, 0,0, 0)
@@ -505,7 +506,7 @@ Library.createbutton = function(SectorName,Name,CallBack)
 	Button.Text = Name
 	Button.MouseButton1Click:Connect(function()
 		UI.ClickSound:Play()
-		CallBack("Trigered!")
+		CallBack(Name..":Triggered!")
 	end)
 end
 
