@@ -91,7 +91,7 @@ local function castomizegui()
 	UI.Gui.Name = math.random(1,10000)..math.random(1,10000)..math.random(1,10000)
 	UI.Gui.IgnoreGuiInset = true
 	UI.Gui.ResetOnSpawn = false
-	UI.Gui.DisplayOrder = 1000
+	UI.Gui.DisplayOrder = 10000
 	UI.Gui.Parent = plr.PlayerGui
 	--//Sound//--
 	UI.ClickSound.Volume = 0.2
@@ -102,8 +102,9 @@ local function castomizegui()
 	UI.OpenCloseSound.Name = "ClickSound"
 	--//MainFrame//--
 	UI.MainFrame.Name = "MainFrame"
+	UI.MainFrame.AnchorPoint = Vector2.new(0.5,0.5)
 	UI.MainFrame.Size = UDim2.new(0.363, 0,0.321, 0)
-	UI.MainFrame.Position = UDim2.new(0.391, 0,0.338, 0)
+	UI.MainFrame.Position = UDim2.new(0.392, 174,0.341, 100)
 	UI.MainFrame.BackgroundColor3 = Color3.fromRGB(255,255,255)
 	UI.MainFrame.Active = true
 	UI.MainFrame.Draggable = true
