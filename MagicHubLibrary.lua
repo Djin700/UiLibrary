@@ -525,7 +525,7 @@ Library.createtrigger = function(SectorName,Name,CallBack)
 	end)
 end
 
-Library.createslider = function(SectorName,Name,CallBack,Min,Max)
+Library.createslider = function(SectorName,Name,CallBack,Min,Max,Default)
 	local Slider = UI.Slider:Clone()
 	Slider.Parent = UI.MainSectors:FindFirstChild(SectorName)
 	Slider.Name = Name.."Slider"
@@ -538,12 +538,12 @@ Library.createslider = function(SectorName,Name,CallBack,Min,Max)
 	SliderTextLabel.Text = "100%"
 	--//SliderScript//--
 	local slidermove = false
-
-	local pos = math.clamp(1, Min, 1)
+	
+	local pos = math.clamp(Default/Max, Min/10/Max,1)
+	local procents = tostring((math.ceil(pos*Max)))
 	SliderButton.Position = UDim2.new(pos-0.035, 0, SliderButton.Position.Y, 0)
 	SliderFill.Size = UDim2.fromScale(pos, 1)
-	local procents = tostring((math.ceil(pos*Max)))
-	SliderTextLabel.Text = Name.." "..(math.ceil(pos*Max)).."%"
+	SliderTextLabel.Text = Name.." "..procents.."%"
 	
 	uis.InputEnded:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 and slidermove == true then
@@ -559,7 +559,7 @@ Library.createslider = function(SectorName,Name,CallBack,Min,Max)
 
 	uis.InputChanged:Connect(function(input)
 		if slidermove and input.UserInputType == Enum.UserInputType.MouseMovement then
-			pos = math.clamp((mouse.X - Slider.AbsolutePosition.X) / Slider.AbsoluteSize.X, Min, 1)
+			pos = math.clamp((mouse.X - Slider.AbsolutePosition.X) / Slider.AbsoluteSize.X, Min/10/Max, 1)
 			SliderButton.Position = UDim2.new(pos-0.035, 0, SliderButton.Position.Y, 0)
 			SliderFill.Size = UDim2.fromScale(pos, 1)
 			procents = tostring((math.ceil(pos*Max)))
