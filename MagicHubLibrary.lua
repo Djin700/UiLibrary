@@ -8,7 +8,7 @@ local ts = game:GetService("TweenService")
 local showclose = false
 local loaded = false
 local TextFontName = Enum.Font.Nunito
-local TitleName = "Best | Hub"
+local TitleName = "X9anto | Hub"
 
 local UI = {
 	--//Gui//--
@@ -103,10 +103,11 @@ local function castomizegui()
 	UI.MainFrame.Active = true
 	UI.MainFrame.Draggable = true
 	UI.MainFrameUiAspect.AspectRatio = 1.8
-	UI.MainFrameGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(30,30,30)),ColorSequenceKeypoint.new(1, Color3.fromRGB(50,50,50))})
+	UI.MainFrameGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(0,0,0)),ColorSequenceKeypoint.new(1, Color3.fromRGB(30,30,30))})
 	UI.MainFrameGradient.Rotation = 90
 	UI.MainFrameCorner.CornerRadius = UDim.new(0,8)
 	UI.MainFrameStroke.Color = Color3.fromRGB(85,85,85)
+	UI.MainFrameStroke.Thickness = 0.5
 	UI.MainFrameStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	UI.MainFrameStroke.LineJoinMode = Enum.LineJoinMode.Round
 	UI.MainFrameStroke.Thickness = 2
@@ -320,6 +321,18 @@ local function castomizegui()
 	UI.DropDownOptionBorder.Thickness = 1.7
 	UI.DropDownOptionUiAspect.AspectRatio = 15
 	UI.DropDownOptionUiAspect.DominantAxis = Enum.DominantAxis.Height
+	--//Rainbow//--
+	task.spawn(function()
+		local colornew = Color3.fromRGB(255,255,255)
+		local cd = 1
+		while task.wait(cd) do
+			ts:Create(UI.MainFrameStroke,TweenInfo.new(cd),{Color = colornew}):Play()
+			ts:Create(UI.Title,TweenInfo.new(cd),{TextColor3 = colornew}):Play()
+			ts:Create(UI.Outline1.UIStroke,TweenInfo.new(cd),{Color = colornew}):Play()
+			ts:Create(UI.Outline2.UIStroke,TweenInfo.new(cd),{Color = colornew}):Play()
+			colornew = Color3.fromRGB(math.random(100,255),math.random(100,255),math.random(100,255))
+		end
+	end)
 end
 
 local function settingsgui()
