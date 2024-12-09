@@ -4,6 +4,7 @@ local uis = game:GetService("UserInputService")
 local plr = game:GetService("Players").LocalPlayer
 local mouse = plr:GetMouse()
 local ts = game:GetService("TweenService")
+local soundservice = game:GetService("SoundService")
 
 local showclose = false
 local loaded = false
@@ -15,6 +16,7 @@ local UI = {
 	Gui = Instance.new("ScreenGui"),
 	--//Sound//--
 	ClickSound = Instance.new("Sound"),
+	OpenCloseSound = Instance.new("Sound"),
 	--//MainFrame//--
 	MainFrame = Instance.new("Frame"),
 	MainFrameUiAspect = Instance.new("UIAspectRatioConstraint"),
@@ -93,8 +95,11 @@ local function castomizegui()
 	UI.Gui.Parent = plr.PlayerGui
 	--//Sound//--
 	UI.ClickSound.Volume = 0.2
-	UI.ClickSound.SoundId = "rbxassetid://6895079853"
+	UI.ClickSound.SoundId = "rbxassetid://17779566040"
 	UI.ClickSound.Name = "ClickSound"
+	UI.OpenCloseSound.Volume = 0.2
+	UI.OpenCloseSound.SoundId = "rbxassetid://1283290053"
+	UI.OpenCloseSound.Name = "ClickSound"
 	--//MainFrame//--
 	UI.MainFrame.Name = "MainFrame"
 	UI.MainFrame.Size = UDim2.new(0.363, 0,0.321, 0)
@@ -161,7 +166,7 @@ local function castomizegui()
 	UI.SectorList.HorizontalAlignment = Enum.HorizontalAlignment.Center
 	UI.SectorList.Padding = UDim.new(0,8)
 	UI.SectorButton.Size = UDim2.new(0.789, 0,0.121, 0)
-	UI.SectorButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+	UI.SectorButton.BackgroundColor3 = Color3.fromRGB(25,25,25)
 	UI.SectorButton.BackgroundTransparency = 0.65
 	UI.SectorButton.Font = TextFontName
 	UI.SectorButton.TextColor3 = Color3.fromRGB(255,255,255)
@@ -194,7 +199,7 @@ local function castomizegui()
 	UI.SectorsFrameList.Padding = UDim.new(0,7)
 	--//Button//--
 	UI.Button.Size = UDim2.new(0.927, 0,0.114, 0)
-	UI.Button.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+	UI.Button.BackgroundColor3 = Color3.fromRGB(25,25,25)
 	UI.Button.BackgroundTransparency = 0.65
 	UI.Button.Font = TextFontName
 	UI.Button.TextColor3 = Color3.fromRGB(255,255,255)
@@ -210,7 +215,7 @@ local function castomizegui()
 	UI.ButtonStroke.Thickness = 1
 	--//Bind//--
 	UI.Bind.Size = UDim2.new(0.927, 0,0.114, 0)
-	UI.Bind.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+	UI.Bind.BackgroundColor3 = Color3.fromRGB(25,25,25)
 	UI.Bind.BackgroundTransparency = 0.65
 	UI.Bind.Font = TextFontName
 	UI.Bind.TextColor3 = Color3.fromRGB(255,255,255)
@@ -226,7 +231,7 @@ local function castomizegui()
 	UI.BindStroke.Thickness = 1
 	--//Trigger//--
 	UI.Trigger.Size = UDim2.new(0.927, 0,0.114, 0)
-	UI.Trigger.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+	UI.Trigger.BackgroundColor3 = Color3.fromRGB(25,25,25)
 	UI.Trigger.BackgroundTransparency = 0.65
 	UI.Trigger.Font = TextFontName
 	UI.Trigger.TextColor3 = Color3.fromRGB(255,255,255)
@@ -269,7 +274,7 @@ local function castomizegui()
 	UI.SliderFill.Size = UDim2.new(1, 0,1, 0)
 	UI.SliderFill.Position = UDim2.new(0,0,0,0)
 	UI.SliderFill.BackgroundTransparency = 0.6
-	UI.SliderFill.BackgroundColor3 = Color3.fromRGB(60,60,60)
+	UI.SliderFill.BackgroundColor3 = Color3.fromRGB(25,25,25)
 	UI.SliderFillBorder.Color = Color3.fromRGB(80,80,80)
 	UI.SliderFillBorder.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	UI.SliderFillBorder.LineJoinMode = Enum.LineJoinMode.Round
@@ -287,7 +292,7 @@ local function castomizegui()
 	UI.DropDownText.Thickness = 1
 	UI.DropDownButton.Size = UDim2.new(1, 0,1, 0)
 	UI.DropDownButton.Position = UDim2.new(0,0,0,0)
-	UI.DropDownButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+	UI.DropDownButton.BackgroundColor3 = Color3.fromRGB(25,25,25)
 	UI.DropDownButton.BackgroundTransparency = 0.65
 	UI.DropDownButton.Font = TextFontName
 	UI.DropDownButton.TextColor3 = Color3.fromRGB(255,255,255)
@@ -309,7 +314,7 @@ local function castomizegui()
 	UI.DropDownScrollList.Padding = UDim.new(0,6)
 	UI.DropDownOption.Size = UDim2.new(0.97, 0,1, 0)
 	UI.DropDownOption.Position = UDim2.new(0,7,0,0)
-	UI.DropDownOption.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+	UI.DropDownOption.BackgroundColor3 = Color3.fromRGB(25,25,25)
 	UI.DropDownOption.BackgroundTransparency = 0.5
 	UI.DropDownOption.Font = TextFontName
 	UI.DropDownOption.TextColor3 = Color3.fromRGB(255,255,255)
@@ -321,11 +326,13 @@ local function castomizegui()
 	UI.DropDownOptionBorder.Thickness = 1.7
 	UI.DropDownOptionUiAspect.AspectRatio = 15
 	UI.DropDownOptionUiAspect.DominantAxis = Enum.DominantAxis.Height
-	--//Rainbow//--
+	--//Effects//--
 	task.spawn(function()
 		local colornew = Color3.fromRGB(255,255,255)
+		local bubles = 5
 		local cd = 1
 		while task.wait(cd) do
+			--//Rainbow//--
 			ts:Create(UI.MainFrameStroke,TweenInfo.new(cd),{Color = colornew}):Play()
 			ts:Create(UI.Title,TweenInfo.new(cd),{TextColor3 = colornew}):Play()
 			ts:Create(UI.Outline1.UIStroke,TweenInfo.new(cd),{Color = colornew}):Play()
@@ -338,7 +345,8 @@ end
 local function settingsgui()
 	castomizegui()
 	--//Sound//--
-	UI.ClickSound.Parent = game:GetService("SoundService")
+	UI.ClickSound.Parent = soundservice
+	UI.OpenCloseSound.Parent = soundservice
 	--//MainFrame//--
 	UI.MainFrameUiAspect.Parent = UI.MainFrame
 	UI.MainFrameCorner.Parent = UI.MainFrame
@@ -404,13 +412,13 @@ end
 local function visiblesector(sectorname)
 	for i,v in UI.Sector:GetChildren() do
 		if v:IsA("TextButton") then
-			v.BackgroundColor3 = Color3.fromRGB(60,60,60)
+			v.BackgroundColor3 = Color3.fromRGB(25,25,25)
 		end
 	end
 	for i,v in UI.MainSectors:GetChildren() do
 		v.Visible = false
 	end
-	UI.Sector[sectorname.."Sector"].BackgroundColor3 = Color3.fromRGB(30,30,30)
+	UI.Sector[sectorname.."Sector"].BackgroundColor3 = Color3.fromRGB(50,50,50)
 	UI.MainSectors[sectorname].Visible = true
 end
 	
@@ -421,6 +429,7 @@ local Tweens = {
 }
 
 local function closegui()
+	UI.OpenCloseSound:Play()
 	showclose = true
 	Tweens.CloseGui:Play()
 	Tweens.CloseGui.Completed:Wait()
@@ -430,6 +439,7 @@ local function closegui()
 end
 
 local function opengui()
+	UI.OpenCloseSound:Play()
 	showclose = true
 	UI.Gui.Enabled = true
 	Tweens.OpenGui:Play()
@@ -595,7 +605,6 @@ Library.createdropdown = function(SectorName,Name,CallBack,Options)
 		NewOption.Name = Options[number]
 		NewOption.Parent = DropDownScrolling
 		NewOption.Text = Options[number]
-		NewOption.BackgroundColor3 = Color3.fromRGB(45,45,45)
 		
 		if number == 1 then
 			CallBack(NewOption.Name)
